@@ -22,7 +22,9 @@ public class HeliumFlamingoCommonEventMixin {
     private static void repersonality$softSetForcedPose(Player instance, Pose pose, Operation<Void> original) {
         if (instance == null) return;
         ItemStack stack = EntityUtils.findEquippedCurio(instance, ModItems.HELIUM_FLAMINGO.value());
-        if (repersonality$lastForced != instance.getForcedPose() && !(stack.getItem() instanceof HeliumFlamingoItem item && item.isHovering(instance, stack)) ) return;
+        if (stack.isEmpty()) return; // If the player doesn't have a helium flamingo at all, return.
+        if (repersonality$lastForced != instance.getForcedPose() &&
+                !((stack.getItem() instanceof HeliumFlamingoItem item && item.isHovering(instance, stack)))) return;
         repersonality$lastForced = pose;
         original.call(instance, pose);
     }
